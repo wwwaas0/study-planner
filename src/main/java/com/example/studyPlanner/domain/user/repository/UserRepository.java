@@ -1,6 +1,6 @@
 package com.example.studyPlanner.domain.user.repository;
 
-import org.apache.catalina.User;
+import com.example.studyPlanner.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

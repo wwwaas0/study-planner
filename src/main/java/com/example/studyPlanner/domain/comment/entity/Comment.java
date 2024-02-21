@@ -1,5 +1,6 @@
 package com.example.studyPlanner.domain.comment.entity;
 
+import com.example.studyPlanner.domain.user.entity.User;
 import com.example.studyPlanner.global.entity.BaseEntity;
 import com.example.studyPlanner.domain.post.entity.Post;
 import jakarta.persistence.*;
@@ -7,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
 
 @Entity
 @Getter
@@ -26,7 +26,7 @@ public class Comment extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private com.example.studyPlanner.domain.user.entity.User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)

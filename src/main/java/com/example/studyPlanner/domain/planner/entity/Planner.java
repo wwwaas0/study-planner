@@ -1,12 +1,12 @@
 package com.example.studyPlanner.domain.planner.entity;
 
+import com.example.studyPlanner.domain.user.entity.User;
 import com.example.studyPlanner.global.entity.BaseEntity;
 import com.example.studyPlanner.domain.task.entity.Task;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

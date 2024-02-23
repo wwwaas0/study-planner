@@ -1,7 +1,7 @@
 package com.example.studyPlanner.post.service;
 
 import com.example.studyPlanner.board.entity.Board;
-import com.example.studyPlanner.board.repository.BoaordRepository;
+import com.example.studyPlanner.board.repository.BoardRepository;
 import com.example.studyPlanner.comment.repository.CommentRepository;
 import com.example.studyPlanner.planner.entity.Planner;
 import com.example.studyPlanner.planner.repository.PlannerRepository;
@@ -17,6 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     private final UserRepository userRepository;
-    private final BoaordRepository boardRepository;
+    private final BoardRepository boardRepository;
     private final PlannerRepository plannerRepository;
     private final CommentRepository commentRepository;
 
@@ -64,10 +67,13 @@ public class PostService {
         return postRepository.findByContentContaining(search);
     }
 
-    public Post createPost(Long plannerId, Long userId, Long boardId, String content) {
-        Optional<Planner> plannerOptional = plannerRepository.findById(plannerId);
-        Optional<com.example.studyPlanner.user.entity.User> userOptional = userRepository.findById(userId);
-        Optional<Board> boardOptional = boardRepository.findById(boardId);
+    public Post createPost(Long userId, LocalDate plannerCreatedAt, String boardName, String content) {
+        LocalDateTime startOfDay = plannerCreatedAt.atStartOfDay();
+        LocalDateTime endOfDay = plannerCreatedAt.atTime(LocalTime.MAX);
+
+        Optional<Planner> plannerOptional = plannerRepository.findByCreatedAtBetween(startOfDay, endOfDay);
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Board> boardOptional = boardRepository.findByName(boardName);
         Post post = null;
 
         if (userOptional.isPresent() && boardOptional.isPresent() && plannerOptional.isPresent()) {
@@ -80,9 +86,9 @@ public class PostService {
         } else if (!userOptional.isPresent()) {
             throw new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다.");
         } else if (!boardOptional.isPresent()) {
-            throw new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다.");
+            throw new EntityNotFoundException(boardName + " 게시판이 존재하지 않습니다.");
         } else {
-            throw new EntityNotFoundException(plannerId + "번 플래너가 존재하지 않습니다.");
+            throw new EntityNotFoundException(plannerCreatedAt + "날짜에 생성된 플래너가 존재하지 않습니다.");
         }
         return post;
     }

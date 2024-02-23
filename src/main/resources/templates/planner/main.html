@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/planner/main.css}" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/planner/main.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+  />
+  <title>Title</title>
+</head>
+<body>
+<div class="modal">
+  <div class="modal-body">
+    <div class="menu-content-wapper">
+      <button class="menu-content">다른 날짜 공부기록 보기</button>
+      <div class="menu-line"></div>
+      <button class="menu-content" id="upload-post">공부기록 게시물로 올리기</button>
+      <div class="menu-line"></div>
+      <button class="menu-content" th:onclick="|location.href='@{}'|">이때까지 올린 Post 조회</button>
+      <div class="menu-line"></div>
+    </div>
+  </div>
+</div>
+<div class="modal-upload-post">
+  <div class="modal-body-upload-post">
+    <div class="upload-post-wapper">
+      <form id="postForm" th:action="@{/posts}" method="post" th:object="${createPostReq}">
+        <label th:for="createdAt">원하는 날짜의 게시물을 골라주세요.</label><br>
+        <input type="date" th:field="*{createdAt}"><br>
+        <label th:for="boardName">글을 올릴 게시판을 골라주세요.</label>
+        <select th:field="*{boardName}">
+          <option value="">게시판 선택</option>
+          <option th:each="name : ${boardNames}" th:value="${name}" th:text="${name}"></option>
+        </select><br>
+        <label th:for="content">플래너와 함께 게시할 내용을 입력해주세요.</label><br>
+        <textarea th:field="*{content}" rows="4" cols="50"></textarea><br>
+        <button type="submit">올리기</button>
+        <button type="button" class="cancel-btn">취소</button>
+      </form>
+    </div>
+  </div>
+</div>
+<header>
+  <div class="nav-wapper">
+    <button class="nav" onclick="redirectToHome()">
+      <span class="material-symbols-outlined"> home </span>
+      <span class="word" >home</span>
+    </button>
+    <button class="nav" onclick="redirectToBoard()">
+      <span class="material-symbols-outlined"> dashboard </span>
+      <a class="word" >board</a>
+    </button>
+    <button class="nav">
+      <span class="material-symbols-outlined"> person </span>
+      <a class="word" >my page</a>
+    </button>
+  </div>
+  <button class="menu-button">
+    <span class="material-symbols-outlined"> menu </span>
+  </button>
+</header>
+<div class="container">
+  <div class="main-content">
+    <div class="current-time" th:text="${#temporals.format(createdAt, 'yyyy년 MM월 dd일 (E)')}"></div>
+    <div class="study-timer-out-wapper">
+      <div class="study-timer-in-wapper">
+        <div class="study-time">공부시간</div>
+        <div class="study-timer" th:text="${studyTime}"></div>
+      </div>
+      <button class="start-button">START</button>
+      <button class="stop-button" style="display: none">STOP</button>
+    </div>
+    <div class="today-task-wapper">
+      <div class="today">
+        <span class="material-symbols-outlined"> description </span>
+        <div class="word">TODAY</div>
+      </div>
+      <div th:each="task : ${tasks}" class="one-task-wapper">
+        <div class="task-status">
+                    <span class="material-symbols-outlined"
+                          th:style="${task.taskStatus.name() == 'NOT_STARTED' ? 'color: red; font-weight: bold' : (task.taskStatus.name() == 'IN_PROGRESS' ? 'color: #ffd600; font-weight: bold' : 'color: #05ff00; font-weight: bold')}"
+                          th:text="${task.taskStatus.name() == 'NOT_STARTED' ? 'close' : (task.taskStatus.name() == 'IN_PROGRESS' ? 'change_history' : 'circle')}">
+        </span>
+        </div>
+        <div class="task-content" th:text="${task.content}"></div>
+      </div>
+
+      <div class="add-task-wapper">
+        <span class="material-symbols-outlined"> add </span>
+      </div>
+    </div>
+  </div>
+  <div class="study-table">
+    <img
+            class="study-table-img"
+            src="/images/study_table.png"
+            style="width: 300px"
+    />
+  </div>
+</div>
+
+</body>
+</html>

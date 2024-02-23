@@ -13,22 +13,21 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
-
 @RequiredArgsConstructor
 @Repository
-public class BoaordRepository {
+public class BoardRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public List<Board> findAll() {
         String sql = "SELECT * FROM board";
-        return jdbcTemplate.query(sql, contactRowMapper());
+        return jdbcTemplate.query(sql, boardRowMapper());
     }
 
     public Optional<Board> findById(Long id) {
         try {
             Board board = jdbcTemplate.queryForObject(
                     "SELECT * FROM board WHERE board_id = ?",
-                    contactRowMapper(),
+                    boardRowMapper(),
                     new Object[]{id}
             );
             return Optional.ofNullable(board);
@@ -76,7 +75,16 @@ public class BoaordRepository {
         );
     }
 
-    private RowMapper<Board> contactRowMapper() {
+    public Optional<Board> findByName(String name) {
+        String sql = "SELECT * FROM board WHERE name = ?";
+        Object[] params = {name};
+
+        return jdbcTemplate.query(sql, params, boardRowMapper())
+                .stream()
+                .findFirst();
+    }
+
+    private RowMapper<Board> boardRowMapper() {
         return (rs, rowNum) -> {
             Board board = new Board();
             board.setId(rs.getLong("board_id"));

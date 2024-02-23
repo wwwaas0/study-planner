@@ -1,0 +1,270 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    height: 80px;
+}
+
+header .nav-wapper {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 440px;
+}
+
+header .menu-button {
+    border: none;
+    background-color: white;
+    margin-top: 15px;
+    margin-right: 10%;
+}
+
+header .nav-wapper .nav {
+    border: none;
+    background-color: white;
+    display: flex;
+    margin-right: 40px;
+}
+
+header .nav .material-symbols-outlined {
+    margin-right: 5px;
+}
+
+header .nav .word {
+    margin-top: 5px;
+    color: black;
+    text-decoration-line: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.container .main-content {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 5%;
+    margin-right: 50px;
+}
+
+.container .main-content .current-time {
+    font-size: 35px;
+}
+
+.container .main-content .study-timer-out-wapper {
+    display: flex;
+    margin-top: 10px;
+    border: 1px solid #b3b3b3;
+    border-radius: 40px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    width: 100%;
+    height: 250px;
+}
+
+.container .main-content .study-timer-out-wapper .study-timer-in-wapper {
+    margin-top: 30px;
+    margin-left: 90px;
+}
+
+.container
+.main-content
+.study-timer-out-wapper
+.study-timer-in-wapper
+.study-time {
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.container
+.main-content
+.study-timer-out-wapper
+.study-timer-in-wapper
+.study-timer {
+    margin-top: 0px;
+    font-size: 90px;
+    font-weight: bold;
+}
+
+.container .main-content .study-timer-out-wapper .start-button {
+    border: none;
+    border-radius: 100px;
+    background-color: black;
+    color: white;
+
+    width: 180px;
+    height: 180px;
+
+    font-size: 30px;
+    margin-left: 60px;
+    margin-top: 40px;
+}
+
+.container .main-content .study-timer-out-wapper .stop-button {
+    border: none;
+    border-radius: 100px;
+    background-color: #e5e4e4;
+
+    width: 180px;
+    height: 180px;
+
+    font-size: 30px;
+    margin-left: 60px;
+    margin-top: 40px;
+}
+
+.container .main-content .today-task-wapper {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.container .main-content .today-task-wapper .today {
+    padding-bottom: 10px;
+    border-bottom: 3px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.container .main-content .today-task-wapper .today .material-symbols-outlined {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.container .main-content .today-task-wapper .today .word {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.container .main-content .today-task-wapper .one-task-wapper {
+    display: flex;
+    height: 50px;
+    width: 100%;
+}
+
+.container .main-content .today-task-wapper .one-task-wapper .task-status {
+    background-color: #f8f8f8;
+    width: 50px;
+    margin-right: 5px;
+
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.container .main-content .today-task-wapper .one-task-wapper .task-content {
+    background-color: #f8f8f8;
+    padding-left: 30px;
+    width: 700px;
+
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.container .main-content .today-task-wapper .add-task-wapper {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+
+    height: 50px;
+    background-color: #e3e3e3;
+
+    margin-top: 5px;
+}
+
+.container.study-table .study-table-img {
+    width: 600px;
+}
+
+/* 메뉴 모달창 */
+.modal {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-body {
+    position: absolute;
+    top: 487px; /*모달을 화면가운데 놓기위함.*/
+    right: 0;
+
+    width: 300px; /*모달의 가로크기*/
+    height: 100%; /*모달의 세로크기*/
+
+    /*padding: 40px;*/
+
+    text-align: right;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px 0 0 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}
+
+.modal-body .menu-content-wapper {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.modal-body .menu-content {
+    border: none;
+    background-color: white;
+    font-size: 20px;
+}
+
+.modal-body .menu-line {
+    width: 270px;
+    height: 1px;
+    margin: 15px 0;
+    background-color: black;
+}
+
+/* 게시글 올리기 모달창 */
+.modal-upload-post {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-body-upload-post {
+    position: absolute;
+    top: 50%; /*모달을 화면가운데 놓기위함.*/
+    width: 400px; /*모달의 가로크기*/
+    height: 600px; /*모달의 세로크기*/
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}

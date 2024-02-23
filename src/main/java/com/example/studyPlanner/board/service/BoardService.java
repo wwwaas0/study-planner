@@ -1,13 +1,14 @@
 package com.example.studyPlanner.board.service;
 
 import com.example.studyPlanner.board.entity.Board;
-import com.example.studyPlanner.board.repository.BoaordRepository;
+import com.example.studyPlanner.board.repository.BoardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +16,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    private final BoaordRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     public List<Board> getBoards() {
         return boardRepository.findAll();
+    }
+    public List<String> getBoardNames(){
+        List<String> boardNames = new ArrayList<>();
+        for(Board board: getBoards()){
+            boardNames.add(board.getName());
+        }
+        return boardNames;
     }
 
     public Board createBoard(String name) {
@@ -30,6 +38,8 @@ public class BoardService {
 
         return board;
     }
+
+
 
     @Transactional
     public Board updateBoard(Long boardId, String newName) {

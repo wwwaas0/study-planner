@@ -64,10 +64,14 @@ public class PostController {
     }
 
     //user id, board id, plannerId 다 path variable로 받을지, 그렇다면 순서는?
-    @PostMapping("/{plannerId}")
-    public String createPost(@PathVariable("plannerId") Long plannerId, @RequestBody CreatePostReq postReq) {
-        Post post = postService.createPost(plannerId, postReq.getUserId(), postReq.getBoardId(), postReq.getContent());
-        return plannerId + "번 게시글이 정상적으로 생성되었습니다.";
+    @PostMapping()
+    public String createPost(@ModelAttribute CreatePostReq postReq) {
+        System.out.println("날짜: " + postReq.getCreatedAt());
+        System.out.println("이름: " + postReq.getBoardName());
+        System.out.println("내용: " + postReq.getContent());
+        Long userId = 1L;
+        Post post = postService.createPost(userId, postReq.getCreatedAt(), postReq.getBoardName(), postReq.getContent());
+        return "redirect:/posts/" + post.getId();
     }
 
     @PatchMapping("/{postId}")

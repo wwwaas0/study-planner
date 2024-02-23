@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/planners")
 public class PlannerController {
+
 }

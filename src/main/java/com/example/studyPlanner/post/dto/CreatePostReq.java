@@ -1,10 +1,13 @@
 package com.example.studyPlanner.post.dto;
 
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
+import java.time.LocalDate;
+
+@Data
 public class CreatePostReq {
-    private Long userId;
-    private Long boardId;
+    private LocalDate createdAt;
+    private String boardName;
     private String content;
 }

@@ -1,4 +1,4 @@
-package com.example.studyPlanner.planner;
+package com.example.studyPlanner.planner.mapper;
 
 import com.example.studyPlanner.planner.dto.GetPlannerHomeRes;
 import com.example.studyPlanner.planner.entity.Planner;

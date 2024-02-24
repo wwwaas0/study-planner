@@ -1,6 +1,6 @@
 package com.example.studyPlanner.task.controller;
 
-import com.example.studyPlanner.task.TaskMapper;
+import com.example.studyPlanner.task.mapper.TaskMapper;
 import com.example.studyPlanner.task.dto.GetTasksRes;
 import com.example.studyPlanner.task.entity.Task;
 import com.example.studyPlanner.task.entity.TaskStatus;

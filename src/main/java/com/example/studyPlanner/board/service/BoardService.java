@@ -29,20 +29,16 @@ public class BoardService {
         return boardNames;
     }
 
-    public Board createBoard(String name) {
+    public void createBoard(String name) {
         Board board = Board.builder()
                 .name(name)
                 .build();
 
         boardRepository.save(board);
-
-        return board;
     }
 
-
-
     @Transactional
-    public Board updateBoard(Long boardId, String newName) {
+    public void updateBoard(Long boardId, String newName) {
         Optional<Board> boardOptional = boardRepository.findById(boardId);
         Board board = null;
         if (boardOptional.isPresent()) {
@@ -52,11 +48,10 @@ public class BoardService {
         } else {
             throw new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다.");
         }
-        return board;
     }
 
 
-    public String deleteBoard(Long boardId) {
+    public void deleteBoard(Long boardId) {
         Optional<Board> boardOptional = boardRepository.findById(boardId);
         Board board = null;
         if (boardOptional.isPresent()) {
@@ -65,6 +60,5 @@ public class BoardService {
         } else {
             throw new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다.");
         }
-        return boardId + "번 게시판이 정상적으로 삭제되었습니다.";
     }
 }

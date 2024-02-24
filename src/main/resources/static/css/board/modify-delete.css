@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    height: 80px;
+}
+
+header .nav-wapper {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 440px;
+}
+
+header .nav-wapper .nav {
+    border: none;
+    background-color: white;
+    display: flex;
+    margin-right: 40px;
+
+    cursor: pointer;
+}
+
+header .nav .material-symbols-outlined {
+    margin-right: 5px;
+}
+
+header .nav .word {
+    margin-top: 5px;
+    color: black;
+    text-decoration-line: none;
+}
+
+.container {
+    margin-top: 50px;
+    margin-left: 400px;
+}
+.header-wapper{
+    display: flex;
+    align-items: center;
+}
+
+.header-wapper .title{
+    font-size: 30px;
+}
+
+.header-wapper .modify{
+    margin-left: 10px;
+    border:none;
+    font-weight: 600;
+
+    width: 100px;
+    height: 35px;
+    border-radius: 55px;
+    cursor: pointer;
+}
+
+/*게시판 리스트*/
+
+.board-list{
+    display: flex;
+
+}
+.board-list-wapper {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+
+    margin-top: 40px;
+}
+
+.board-list-wapper .board {
+    border: none;
+    border-radius: 55px;
+
+    margin-right: 15px;
+
+    flex-basis: 100px;
+    height: 40px;
+}
+
+.board-list-wapper .modifyBoard,
+.board-list-wapper .deleteBoard{
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+
+    width: 30px;
+    height: 30px;
+
+    margin-right: 5px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    cursor: pointer;
+}
+
+/* 게시판 수정 모달창 */
+.modal-modify {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-body-modify {
+    position: absolute;
+    top: 50%; /*모달을 화면가운데 놓기위함.*/
+    width: 400px; /*모달의 가로크기*/
+    height: 600px; /*모달의 세로크기*/
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}
+
+/* 게시판 삭제 모달창 */
+.modal-delete {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-body-delete {
+    position: absolute;
+    top: 50%; /*모달을 화면가운데 놓기위함.*/
+    width: 400px; /*모달의 가로크기*/
+    height: 600px; /*모달의 세로크기*/
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}

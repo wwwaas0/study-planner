@@ -8,10 +8,11 @@ import java.util.List;
 
 @Data
 public class GetPostRes {
-    //    유저 이름, 게시글 생성 날짜, 플래너 생성 날짜, 총 공부 시간, 할일 리스트
+    private Long postId;
     private String name;
     private LocalDateTime postCreatedAt;
     private LocalDateTime plannerCreatedAt;
-    private int studyTime;
+    private String studyTime;
     private List<Task> tasks;
+    private String content;
 }

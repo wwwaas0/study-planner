@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    height: 80px;
+}
+
+header .nav-wapper {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 440px;
+}
+
+header .menu-button {
+    border: none;
+    background-color: white;
+    margin-top: 15px;
+    margin-right: 10%;
+}
+
+header .nav-wapper .nav {
+    border: none;
+    background-color: white;
+    display: flex;
+    margin-right: 40px;
+}
+
+header .nav .material-symbols-outlined {
+    margin-right: 5px;
+}
+
+header .nav .word {
+    margin-top: 5px;
+    color: black;
+    text-decoration-line: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*게시판 리스트*/
+.board-list-wapper {
+    display: flex;
+    align-items: center;
+    width: 1000px;
+    height: 60px;
+
+    margin-top: 40px;
+    /* background-color: aqua; */
+}
+
+.board-list-wapper .board-all {
+    background-color: #B6B6B6;
+    border: none;
+    border-radius: 55px;
+
+    margin-right: 20px;
+
+    flex-basis: 100px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.board-list-wapper .board {
+    border: none;
+    border-radius: 55px;
+
+    margin-right: 20px;
+
+    flex-basis: 100px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.board-list-wapper .board-list {
+    background-color: white;
+    border: none;
+
+    margin-left: 380px;
+    margin-top: 70px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    flex-basis: 110px;
+    height: 30px;
+    cursor: pointer;
+
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+}
+
+.board-list-wapper .board-plus {
+    border: none;
+    background-color: white;
+}
+
+/* 게시물 리스트 */
+.post-list-wapper {
+    margin-top: 50px;
+}
+
+.post-list-wapper .line {
+    background-color: black;
+
+    width: 1000px;
+    height: 2px;
+}
+
+.post-list-wapper .post-list .one-post-wapper {
+    margin-top: 20px;
+}
+
+.post-list-wapper .post-list .one-post-wapper .post-content {
+    display: flex;
+
+    margin-left: 60px;
+    margin-bottom: 20px;
+}
+
+.post-list-wapper .post-list .one-post-wapper .post-content .date-time-wapper {
+    /* background-color: cadetblue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-left: 20px;
+    margin-top: -10px;
+}
+
+.post-list-wapper
+.post-list
+.one-post-wapper
+.post-content
+.date-time-wapper
+.post-date {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.post-list-wapper
+.post-list
+.one-post-wapper
+.post-content
+.date-time-wapper
+.post-date:hover {
+    text-decoration: underline;
+}
+
+.post-list-wapper
+.post-list
+.one-post-wapper
+.post-content
+.date-time-wapper
+.post-time {
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.post-list-wapper .post-list .one-post-wapper .post-content .task-wapper {
+    margin-top: -10px;
+    margin-left: 60px;
+}
+
+.post-list-wapper .post-list .one-post-wapper .post-content .task-wapper .task {
+    display: flex;
+}
+
+.post-list-wapper
+.post-list
+.one-post-wapper
+.post-content
+.task-wapper
+.task
+.task-status {
+    background-color: #F9F9F9;
+    width: 50px;
+    margin-right: -10px;
+    border-radius: 5px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+.post-list-wapper
+.post-list
+.one-post-wapper
+.post-content
+.task-wapper
+.task
+.task-content {
+    background-color: #F9F9F9;
+    padding-left: 20px;
+    width: 500px;
+    border-radius: 5px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.page-wapper {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+

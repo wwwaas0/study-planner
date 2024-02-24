@@ -8,7 +8,8 @@ import java.util.List;
 
 @Data
 public class GetPostListRes {
+    private Long postId;
     private LocalDateTime createdAt;
-    private int studyTime;
+    private String studyTime;
     private List<Task> topThreeTask;
 }

@@ -28,7 +28,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final PlannerRepository plannerRepository;
@@ -108,7 +107,7 @@ public class PostService {
     }
 
     @Transactional
-    public String deletePost(Long postId) {
+    public void deletePost(Long postId) {
         Optional<Post> postOptional = postRepository.findById(postId);
         if (postOptional.isPresent()) {
             log.info("게시글의 댓글이 함께 삭제됩니다.");
@@ -117,6 +116,5 @@ public class PostService {
         } else {
             throw new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다.");
         }
-        return postId + "번 게시물이 정상적으로 삭제되었습니다.";
     }
 }

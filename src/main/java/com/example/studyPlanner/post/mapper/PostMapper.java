@@ -19,13 +19,17 @@ public interface PostMapper {
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
     @Mapping(source = "planner", target = "topThreeTask", qualifiedByName = "mapTopThreeTasks")
+    @Mapping(source = "planner", target = "studyTime", qualifiedByName = "mapStudyTime")
+    @Mapping(source = "id", target = "postId")
     public GetPostListRes toListDTO(Post post);
 
     @Mapping(source = "user.name", target = "name")
+    @Mapping(source = "content", target = "content")
+    @Mapping(source = "id", target = "postId")
     @Mapping(source = "post.createdAt", target = "postCreatedAt")
     @Mapping(source = "planner.createdAt", target = "plannerCreatedAt")
-    @Mapping(source = "planner.studyTime", target = "studyTime")
     @Mapping(source = "planner", target = "tasks", qualifiedByName = "tasks")
+    @Mapping(source = "planner", target = "studyTime", qualifiedByName = "mapStudyTime")
     public GetPostRes toDTO(Post post);
 
     @Named("mapTopThreeTasks")
@@ -38,5 +42,14 @@ public interface PostMapper {
     @Named("tasks")
     default List<Task> tasks(Planner planner) {
         return planner.getTasks();
+    }
+
+    @Named("mapStudyTime")
+    default String mapStudyTime(Planner planner) {
+        int studyTime = planner.getStudyTime();
+        int hours = studyTime / 3600;
+        int minutes = (studyTime % 3600) / 60;
+        int seconds = studyTime % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/board/modify-delete.css}" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/board/modify-delete.js" defer></script>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+  <title>게시판 편집</title>
+</head>
+<body>
+<div class="modal-modify">
+  <div class="modal-body-modify">
+    <div class="modify">
+      <form id="modifyForm" method="post" th:object="${modifyBoard}">
+        <label th:for="newName">수정할 게시판 이름을 입력해주세요.</label><br>
+        <textarea th:field="*{newName}" rows="4" cols="50"></textarea><br>
+        <button type="submit">수정</button>
+        <button type="button" class="cancel-btn">취소</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-delete">
+  <div class="modal-body-delete">
+    <div class="delete">
+      <form id="deleteForm" method="get">
+        <div>게시판을 정말 삭제하시겠습니까?</div>
+        <button type="submit">삭제</button>
+        <button type="button" class="cancel-btn">취소</button>
+      </form>
+    </div>
+  </div>
+</div>
+<header>
+  <div class="nav-wapper">
+    <button class="nav" onclick="redirectToHome()">
+      <span class="material-symbols-outlined"> home </span>
+      <span class="word">home</span>
+    </button>
+    <button class="nav" onclick="redirectToBoard()">
+      <span class="material-symbols-outlined"> dashboard </span>
+      <a class="word">board</a>
+    </button>
+    <button class="nav">
+      <span class="material-symbols-outlined"> person </span>
+      <a class="word">my page</a>
+    </button>
+  </div>
+</header>
+<div class="container">
+  <div class="header-wapper">
+    <h2 class="title">게시판 편집</h2>
+    <button class="modify" th:onclick="|location.href='@{/boards}'|">돌아가기</button>
+  </div>
+  <div class="board-list">
+    <div class="board-list-wapper" th:each="board : ${boards}">
+      <button class="board" th:text="${board.getName()}"></button>
+      <button type="button" class="modifyBoard" th:attr="data-boardid=${board.getId()}"><span
+              class="material-symbols-outlined">edit</span></button>
+      <!--            게시판 삭제하는 모달 띄우기 클릭한 보드의 이름을 같이 전송)-->
+      <button type="button" class="deleteBoard" th:attr="data-boardid=${board.getId()}"><span
+              class="material-symbols-outlined">do_not_disturb_on</span></button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

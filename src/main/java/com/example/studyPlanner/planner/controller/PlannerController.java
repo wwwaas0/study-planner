@@ -1,7 +1,7 @@
 package com.example.studyPlanner.planner.controller;
 
 import com.example.studyPlanner.board.service.BoardService;
-import com.example.studyPlanner.planner.PlannerMapper;
+import com.example.studyPlanner.planner.mapper.PlannerMapper;
 import com.example.studyPlanner.planner.dto.GetPlannerHomeRes;
 import com.example.studyPlanner.planner.entity.Planner;
 import com.example.studyPlanner.planner.service.PlannerService;

@@ -1,4 +1,4 @@
-package com.example.studyPlanner.task;
+package com.example.studyPlanner.task.mapper;
 
 import com.example.studyPlanner.task.dto.GetTasksRes;
 import com.example.studyPlanner.task.entity.Task;

@@ -59,6 +59,7 @@ public class PlannerService {
         return "공부 시간: " + studyTime;
     }
 
+    @Transactional
     public Planner getHome(Long userId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
@@ -68,10 +69,11 @@ public class PlannerService {
         if (plannerOptional.isPresent()) {
             return plannerOptional.get();
         } else {
-            User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다."));
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다."));
 
-            Planner newPlanner = new Planner();
-            newPlanner.setUser(user);
+            Planner newPlanner = new Planner(user);
+//            newPlanner.setUser(user);
 
             // 플래너 저장 및 리턴
             return plannerRepository.save(newPlanner);

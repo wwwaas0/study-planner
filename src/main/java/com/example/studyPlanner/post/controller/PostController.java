@@ -63,9 +63,11 @@ public class PostController {
 
     //TODO: 검색하는 페이지 만들기(메인 게시판 페이지에서 돋보기 아이콘 누르면 넘어갈 수 있게)
     @GetMapping("/search")
-    public List<GetPostListRes> searchPosts(@RequestParam("searchWord") String searchWord) {
-        List<GetPostListRes> getPostListRes = postService.searchPosts(searchWord);
-        return getPostListRes;
+    public String searchPosts(@RequestParam(defaultValue = "0", name = "page") int page, @RequestParam("searchWord") String searchWord, Model model) {
+        List<GetPostListRes> getPostListRes = postService.searchPosts(searchWord, page);
+        model.addAttribute("postListRes", getPostListRes);
+
+        return "post/search";
     }
 
     @PostMapping()

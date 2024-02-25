@@ -5,7 +5,10 @@ import com.example.studyPlanner.board.repository.BoardRepository;
 import com.example.studyPlanner.comment.repository.CommentRepository;
 import com.example.studyPlanner.planner.entity.Planner;
 import com.example.studyPlanner.planner.repository.PlannerRepository;
+import com.example.studyPlanner.post.dto.GetPostListRes;
+import com.example.studyPlanner.post.dto.GetPostRes;
 import com.example.studyPlanner.post.entity.Post;
+import com.example.studyPlanner.post.mapper.PostMapper;
 import com.example.studyPlanner.post.repository.PostRepository;
 import com.example.studyPlanner.user.entity.User;
 import com.example.studyPlanner.user.repository.UserRepository;
@@ -22,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,88 +37,84 @@ public class PostService {
     private final PlannerRepository plannerRepository;
     private final CommentRepository commentRepository;
 
+    private static final int PAGE_SIZE = 10;
 
-    public List<Post> getAllPosts(int page) {
-        int pageSize = 10;
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
-        return postRepository.findAllByOrderByCreatedAtDesc(pageRequest);
+    public List<GetPostListRes> getAllPosts(int page) {
+        PageRequest pageRequest = createPageRequest(page);
+
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(pageRequest);
+        List<GetPostListRes> postListResList = posts.stream()
+                .map(post -> PostMapper.INSTANCE.toListDTO(post))
+                .collect(Collectors.toList());
+
+        return postListResList;
     }
 
-    public List<Post> getPosts(Long boardId, int page) {
-        int pageSize = 10;
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
-        return postRepository.findByBoardIdOrderByCreatedAtDesc(boardId, pageRequest);
+    public List<GetPostListRes> getPosts(Long boardId, int page) {
+        PageRequest pageRequest = createPageRequest(page);
+
+        List<Post> posts = postRepository.findByBoardIdOrderByCreatedAtDesc(boardId, pageRequest);
+        List<GetPostListRes> postListResList = posts.stream()
+                .map(post -> PostMapper.INSTANCE.toListDTO(post))
+                .collect(Collectors.toList());
+
+        return postListResList;
     }
 
-
-    public Post getPost(Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        Post post = null;
-
-        if (postOptional.isPresent()) {
-            post = postOptional.get();
-            return post;
-        } else {
-            throw new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다.");
-        }
-
+    private PageRequest createPageRequest(int page) {
+        return PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
     }
 
+    public GetPostRes getPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다."));
 
-    public List<Post> searchPosts(String search) { // 할일 내용 또는 게시글의 내용
+        GetPostRes getPostRes = PostMapper.INSTANCE.toDTO(post);
+        return getPostRes;
+    }
+
+    public List<GetPostListRes> searchPosts(String search) { // 할일 내용 또는 게시글의 내용
         //TODO: 할 일의 content도 검색 가능하게
-        return postRepository.findByContentContaining(search);
+        List<Post> posts = postRepository.findByContentContaining(search);
+
+        List<GetPostListRes> postListResList = posts.stream()
+                .map(post -> PostMapper.INSTANCE.toListDTO(post))
+                .collect(Collectors.toList());
+        return postListResList;
     }
 
     public Post createPost(Long userId, LocalDate plannerCreatedAt, String boardName, String content) {
         LocalDateTime startOfDay = plannerCreatedAt.atStartOfDay();
         LocalDateTime endOfDay = plannerCreatedAt.atTime(LocalTime.MAX);
 
-        Optional<Planner> plannerOptional = plannerRepository.findByCreatedAtBetween(startOfDay, endOfDay);
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Board> boardOptional = boardRepository.findByName(boardName);
-        Post post = null;
+        Planner planner = plannerRepository.findByCreatedAtBetween(startOfDay, endOfDay)
+                .orElseThrow(() -> new EntityNotFoundException(plannerCreatedAt + " 날짜에 생성된 플래너가 존재하지 않습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다."));
+        Board board = boardRepository.findByName(boardName)
+                .orElseThrow(() -> new EntityNotFoundException(boardName + " 게시판이 존재하지 않습니다."));
 
-        if (userOptional.isPresent() && boardOptional.isPresent() && plannerOptional.isPresent()) {
-            Planner planner = plannerOptional.get();
-            User user = userOptional.get();
-            Board board = boardOptional.get();
+        Post post = new Post(user, board, planner, content);
+        postRepository.save(post);
 
-            post = new Post(user, board, planner, content);
-            postRepository.save(post);
-        } else if (!userOptional.isPresent()) {
-            throw new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다.");
-        } else if (!boardOptional.isPresent()) {
-            throw new EntityNotFoundException(boardName + " 게시판이 존재하지 않습니다.");
-        } else {
-            throw new EntityNotFoundException(plannerCreatedAt + "날짜에 생성된 플래너가 존재하지 않습니다.");
-        }
         return post;
     }
 
     @Transactional
     public Post updatePost(Long postId, String newContent) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        Post post = null;
-        if (postOptional.isPresent()) {
-            post = postOptional.get();
-            post.setContent(newContent);
-            postRepository.save(post);
-        } else {
-            throw new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다.");
-        }
-        return post;
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다."));
+        post.setContent(newContent);
+
+        return postRepository.save(post);
     }
 
     @Transactional
     public void deletePost(Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        if (postOptional.isPresent()) {
-            log.info("게시글의 댓글이 함께 삭제됩니다.");
-            postRepository.deleteById(postId);
-            commentRepository.deleteById(postId);
-        } else {
-            throw new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다.");
-        }
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다."));
+
+        log.info("게시글의 댓글이 함께 삭제됩니다.");
+        postRepository.deleteById(postId);
+        commentRepository.deleteById(postId);
     }
 }

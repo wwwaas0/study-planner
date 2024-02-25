@@ -2,8 +2,10 @@ package com.example.studyPlanner.task.service;
 
 import com.example.studyPlanner.planner.entity.Planner;
 import com.example.studyPlanner.planner.repository.PlannerRepository;
+import com.example.studyPlanner.task.dto.GetTasksRes;
 import com.example.studyPlanner.task.entity.Task;
 import com.example.studyPlanner.task.entity.TaskStatus;
+import com.example.studyPlanner.task.mapper.TaskMapper;
 import com.example.studyPlanner.task.repository.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -21,8 +24,12 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final PlannerRepository plannerRepository;
 
-    public List<Task> getTasks(Long plannerId) {
-        return taskRepository.findByPlannerId(plannerId);
+    public List<GetTasksRes> getTasks(Long plannerId) {
+        List<Task> tasks = taskRepository.findByPlannerId(plannerId);
+        List<GetTasksRes> tasksRes = tasks.stream()
+                .map(task -> TaskMapper.INSTANCE.toDTO(task))
+                .collect(Collectors.toList());
+        return tasksRes;
     }
 
     public Task createTask(Long plannerId, String content) {

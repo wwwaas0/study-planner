@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/post/list-view.css}" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/post/list-view.js" defer></script>
+  <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+  />
+  <title>게시판 별 게시물</title>
+</head>
+<body>
+<header>
+  <div class="nav-wapper">
+    <button class="nav" onclick="redirectToHome()">
+      <span class="material-symbols-outlined"> home </span>
+      <span class="word">home</span>
+    </button>
+    <button class="nav" onclick="redirectToBoard()">
+      <span class="material-symbols-outlined"> dashboard </span>
+      <a class="word">board</a>
+    </button>
+    <button class="nav">
+      <span class="material-symbols-outlined"> person </span>
+      <a class="word">my page</a>
+    </button>
+  </div>
+</header>
+<div class="container">
+  <div class="board-list-wapper">
+    <button class="board-all" th:onclick="|location.href='@{/posts/all}'|">전체</button>
+    <button class="board" th:each="board : ${boards}" th:text="${board.getName()}"
+            th:onclick="|location.href='@{/posts/board/{boardId}(boardId = ${board.id})}'|"></button>
+    <button class="board-list" th:onclick="|location.href='@{/boards}'|">게시판 목록보기</button>
+
+  </div>
+  <div class="post-list-wapper">
+    <div class="line"></div>
+    <div class="post-list">
+      <div class="one-post-wapper" th:each="postRes : ${postListRes}">
+        <div class="post-content">
+          <div class="date-time-wapper">
+            <div class="post-date" th:onclick="|location.href='@{/posts/}| + ${postRes.getPostId()} + |'|"
+                 th:text="${#temporals.format(postRes.getCreatedAt(), 'yyyy년 MM월 dd일 (E)')}"></div>
+            <div class="post-time" th:text="${postRes.getStudyTime()}"></div>
+          </div>
+          <div class="task-wapper">
+            <div class="task" th:each="task : ${postRes.getTopThreeTask()}">
+              <div class="task-status">
+                    <span
+                            class="material-symbols-outlined"
+                            th:style="${task.taskStatus.name() == 'NOT_STARTED' ? 'color: red; font-weight: bold' : (task.taskStatus.name() == 'IN_PROGRESS' ? 'color: #ffd600; font-weight: bold' : 'color: #05ff00; font-weight: bold')}"
+                            th:text="${task.taskStatus.name() == 'NOT_STARTED' ? 'close' : (task.taskStatus.name() == 'IN_PROGRESS' ? 'change_history' : 'circle')}"
+                    >
+                      circle
+                    </span>
+              </div>
+              <div class="task-content" th:text="${task.content}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-wapper">
+    <span class="material-symbols-outlined"> navigate_before </span>
+    <span class="page-number">1</span>
+    <span class="material-symbols-outlined"> navigate_next </span>
+  </div>
+</div>
+</body>
+</html>

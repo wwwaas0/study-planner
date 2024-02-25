@@ -14,7 +14,7 @@
 <div class="modal-create">
   <div class="modal-body-create">
     <div class="create">
-      <form id="modifyForm" th:action="@{/boards}" method="post" th:object="${createBoardReq}">
+      <form id="modifyForm" th:action="@{/boards}" method="post" th:object="${createBoardRequest}">
         <label th:for="newName">게시판의 이름을 입력해주세요.</label><br>
         <textarea th:field="*{newName}" rows="4" cols="50"></textarea><br>
         <button type="submit">생성</button>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="board-list-wapper">
-    <button class="board" th:each="boardName : ${boradNames}" th:text="${boardName.getName()}"></button>
+    <button class="board" th:each="boardName : ${boardNames}" th:text="${boardName.getName()}"></button>
     <button class="board-plus" id="createBoard">
       <span class="material-symbols-outlined"> add_circle</span>
     </button>

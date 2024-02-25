@@ -34,7 +34,7 @@
         <label th:for="boardName">글을 올릴 게시판을 골라주세요.</label>
         <select th:field="*{boardName}">
           <option value="">게시판 선택</option>
-          <option th:each="name : ${boardNames}" th:value="${name}" th:text="${name}"></option>
+          <option th:each="boardListRes : ${getBoardListRes}" th:value="${boardListRes.getName()}" th:text="${boardListRes.getName()}"></option>
         </select><br>
         <label th:for="content">플래너와 함께 게시할 내용을 입력해주세요.</label><br>
         <textarea th:field="*{content}" rows="4" cols="50"></textarea><br>

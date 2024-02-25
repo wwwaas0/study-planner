@@ -1,11 +1,10 @@
 package com.example.studyPlanner.board.controller;
 
-import com.example.studyPlanner.board.dto.CreateBoardReq;
+import com.example.studyPlanner.board.dto.CreateBoardRequest;
 import com.example.studyPlanner.board.dto.GetBoardListRes;
 import com.example.studyPlanner.board.dto.ModifyBoard;
 import com.example.studyPlanner.board.entity.Board;
 import com.example.studyPlanner.board.service.BoardService;
-import com.example.studyPlanner.board.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -24,30 +22,25 @@ public class BoardController {
 
     @GetMapping()
     public String getBoards(Model model) {
-        List<Board> boards = boardService.getBoards();
-
-        List<GetBoardListRes> boardListRes = boards.stream()
-                .map(board -> BoardMapper.INSTANCE.toDTO(board))
-                .collect(Collectors.toList());
-        model.addAttribute("boradNames", boardListRes);
+        List<GetBoardListRes> getBoardListRes = boardService.getBoardNames();
+        model.addAttribute("boardNames", getBoardListRes);
 
         //게시판 생성 모달 - 입력 폼
-        CreateBoardReq createBoardReq = new CreateBoardReq();
-        model.addAttribute("createBoardReq", createBoardReq);
+        CreateBoardRequest createBoardRequest = new CreateBoardRequest();
+        model.addAttribute("createBoardReq", createBoardRequest);
         return "board/name-list";
     }
 
     @PostMapping()
-    public String createBoard(@ModelAttribute CreateBoardReq createBoardReq) {
-        System.out.println(createBoardReq.getNewName());
-        boardService.createBoard(createBoardReq.getNewName());
+    public String createBoard(@ModelAttribute CreateBoardRequest createBoardRequest) {
+        System.out.println(createBoardRequest.getNewName());
+        boardService.createBoard(createBoardRequest.getNewName());
         return "redirect:/boards";
     }
 
     @GetMapping("/modify-delete")
     public String getModifyDeleteBoard(Model model){
         List<Board> boards = boardService.getBoards();
-
         model.addAttribute("boards", boards);
 
         //게시판 이름 수정 모달

@@ -50,7 +50,7 @@ public class PlannerController {
 
         CreatePostReq createPostReq = new CreatePostReq();
         model.addAttribute("createPostReq", createPostReq);
-        model.addAttribute("boardNames", boardService.getBoardNames());
+        model.addAttribute("getBoardListRes", boardService.getBoardNames());
 
         return "planner/main";
     }
@@ -69,7 +69,7 @@ public class PlannerController {
 
         CreatePostReq createPostReq = new CreatePostReq();
         model.addAttribute("createPostReq", createPostReq);
-        model.addAttribute("boardNames", boardService.getBoardNames());
+        model.addAttribute("getBoardListRes", boardService.getBoardNames());
 
         return "planner/main";
     }

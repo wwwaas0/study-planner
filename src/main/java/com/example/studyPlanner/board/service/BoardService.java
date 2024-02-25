@@ -1,6 +1,8 @@
 package com.example.studyPlanner.board.service;
 
+import com.example.studyPlanner.board.dto.GetBoardListRes;
 import com.example.studyPlanner.board.entity.Board;
+import com.example.studyPlanner.board.mapper.BoardMapper;
 import com.example.studyPlanner.board.repository.BoardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -21,12 +24,14 @@ public class BoardService {
     public List<Board> getBoards() {
         return boardRepository.findAll();
     }
-    public List<String> getBoardNames(){
-        List<String> boardNames = new ArrayList<>();
-        for(Board board: getBoards()){
-            boardNames.add(board.getName());
-        }
-        return boardNames;
+
+    public List<GetBoardListRes> getBoardNames() {
+        List<Board> boards = getBoards();
+
+        List<GetBoardListRes> boardListRes = boards.stream()
+                .map(board -> BoardMapper.INSTANCE.toDTO(board))
+                .collect(Collectors.toList());
+        return boardListRes;
     }
 
     public void createBoard(String name) {
@@ -39,26 +44,18 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(Long boardId, String newName) {
-        Optional<Board> boardOptional = boardRepository.findById(boardId);
-        Board board = null;
-        if (boardOptional.isPresent()) {
-            board = boardOptional.get();
-            board.setName(newName);
-            boardRepository.save(board);
-        } else {
-            throw new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다.");
-        }
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다."));
+        board.setName(newName);
+
+        boardRepository.save(board);
     }
 
 
     public void deleteBoard(Long boardId) {
-        Optional<Board> boardOptional = boardRepository.findById(boardId);
-        Board board = null;
-        if (boardOptional.isPresent()) {
-            board = boardOptional.get();
-            boardRepository.delete(board);
-        } else {
-            throw new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다.");
-        }
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다."));
+
+        boardRepository.delete(board);
     }
 }

@@ -36,6 +36,10 @@ public class Planner extends BaseEntity{
     @OneToMany(mappedBy = "planner")
     private List<Task> tasks = new ArrayList<>();
 
+    public Planner(User user){
+        this.user = user;
+    }
+
     public void stopStudy(Planner planner, int totalStudyTime){
         planner.setStudyTime(totalStudyTime);
         planner.setStudyStart(null);

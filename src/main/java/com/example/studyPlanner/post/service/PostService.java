@@ -73,9 +73,10 @@ public class PostService {
         return getPostRes;
     }
 
-    public List<GetPostListRes> searchPosts(String search) { // 할일 내용 또는 게시글의 내용
+    public List<GetPostListRes> searchPosts(String search, int page) { // 할일 내용 또는 게시글의 내용
         //TODO: 할 일의 content도 검색 가능하게
-        List<Post> posts = postRepository.findByContentContaining(search);
+        PageRequest pageRequest = createPageRequest(page);
+        List<Post> posts = postRepository.findByContentContaining(search, pageRequest);
 
         List<GetPostListRes> postListResList = posts.stream()
                 .map(post -> PostMapper.INSTANCE.toListDTO(post))
@@ -95,9 +96,7 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException(boardName + " 게시판이 존재하지 않습니다."));
 
         Post post = new Post(user, board, planner, content);
-        postRepository.save(post);
-
-        return post;
+        return postRepository.save(post);
     }
 
     @Transactional

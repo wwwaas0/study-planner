@@ -15,5 +15,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByBoardIdOrderByCreatedAtDesc(Long boardId, PageRequest pageRequest);
 
     List<Post> findByBoard(Board board);
-    List<Post> findByContentContaining(String searchWord);
+    List<Post> findByContentContaining(String searchWord, PageRequest pageRequest);
 }

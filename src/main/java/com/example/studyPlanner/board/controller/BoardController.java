@@ -27,7 +27,7 @@ public class BoardController {
 
         //게시판 생성 모달 - 입력 폼
         CreateBoardRequest createBoardRequest = new CreateBoardRequest();
-        model.addAttribute("createBoardReq", createBoardRequest);
+        model.addAttribute("createBoardRequest", createBoardRequest);
         return "board/name-list";
     }
 

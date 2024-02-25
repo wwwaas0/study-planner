@@ -46,6 +46,66 @@ header .nav .word {
     align-items: center;
 }
 
+.search-wrapper{
+display: flex;
+}
+
+/*검색창*/
+.search-bar {
+    display: flex;
+    margin-top: 20px;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    height: 50px;
+    width: 500px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar .search-word {
+    height: 30px;
+    width: 400px;
+    border: none;
+    background-color: transparent;
+}
+
+.search-bar .search-word:focus {
+    outline: none;
+}
+
+.search-bar .search-button {
+    border: none;
+    background-color: transparent;
+
+    position: relative;
+    top: 5px;
+    left: 10px;
+
+    cursor: pointer;
+}
+
+.search-wrapper .board-list {
+    position: relative;
+    top: 27px;
+    left: 30px;
+
+    background-color: white;
+    border: none;
+
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    flex-basis: 110px;
+    height: 30px;
+    cursor: pointer;
+
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+}
+
+
 /*게시판 리스트*/
 .board-list-wapper {
     display: flex;
@@ -54,7 +114,6 @@ header .nav .word {
     height: 60px;
 
     margin-top: 40px;
-    /* background-color: aqua; */
 }
 
 .board-list-wapper .board-all {
@@ -80,22 +139,7 @@ header .nav .word {
     cursor: pointer;
 }
 
-.board-list-wapper .board-list {
-    background-color: white;
-    border: none;
 
-    margin-left: 380px;
-    margin-top: 70px;
-    padding-left: 5px;
-    padding-right: 5px;
-
-    flex-basis: 110px;
-    height: 30px;
-    cursor: pointer;
-
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px 1px #dadce0;
-}
 
 .board-list-wapper .board-plus {
     border: none;
@@ -192,6 +236,7 @@ header .nav .word {
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
 }
+
 .post-list-wapper
 .post-list
 .one-post-wapper

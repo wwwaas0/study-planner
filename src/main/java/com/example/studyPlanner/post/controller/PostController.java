@@ -3,12 +3,15 @@ package com.example.studyPlanner.post.controller;
 
 import com.example.studyPlanner.board.entity.Board;
 import com.example.studyPlanner.board.service.BoardService;
+import com.example.studyPlanner.comment.dto.CreateCommentRequest;
+import com.example.studyPlanner.comment.dto.GetCommentListRes;
+import com.example.studyPlanner.comment.dto.UpdateCommentRequest;
+import com.example.studyPlanner.comment.service.CommentService;
 import com.example.studyPlanner.post.dto.CreatePostReq;
 import com.example.studyPlanner.post.dto.GetPostListRes;
 import com.example.studyPlanner.post.dto.GetPostRes;
 import com.example.studyPlanner.post.dto.ModifyPost;
 import com.example.studyPlanner.post.entity.Post;
-import com.example.studyPlanner.post.mapper.PostMapper;
 import com.example.studyPlanner.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class PostController {
     private final PostService postService;
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/all")
     public String getAllPosts(@RequestParam(defaultValue = "0", name = "page") int page, Model model) {
@@ -57,6 +60,18 @@ public class PostController {
         //게시물 내용 수정 폼
         ModifyPost modifyPost = new ModifyPost();
         model.addAttribute("modifyPost", modifyPost);
+
+        //댓글 정보
+        List<GetCommentListRes> getCommentListRes = commentService.getComments(id);
+        model.addAttribute("getCommentListRes", getCommentListRes);
+
+        //댓글 생성 폼
+        CreateCommentRequest createCommentRequest = new CreateCommentRequest();
+        model.addAttribute("createCommentRequest", createCommentRequest);
+
+        //댓글 내용 수정 폼
+        UpdateCommentRequest updateCommentRequest = new UpdateCommentRequest();
+        model.addAttribute("updateCommentRequest", updateCommentRequest);
 
         return "/post/detail-view";
     }

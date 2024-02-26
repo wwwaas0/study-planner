@@ -35,6 +35,69 @@
     </div>
   </div>
 </div>
+<div class="modal">
+  <div class="modal-body">
+    <div class="close-wrapper">
+      <span class="material-symbols-outlined"> disabled_by_default </span>
+    </div>
+    <div class="menu-line"></div>
+    <div class="one-comment" th:each="commentRes : ${getCommentListRes}">
+      <div class="modify-delete-wrapper">
+        <button type="button" class="user-profile">
+              <span class="material-symbols-outlined" style="font-size: 35px">
+                account_circle
+              </span>
+        </button>
+        <button type="button" class="modifyComment" th:attr="data-commentId=${commentRes.getCommentId()}">
+          <span class="material-symbols-outlined">edit</span>
+        </button>
+        <button type="button" class="deleteComment" th:attr="data-commentId=${commentRes.getCommentId()}">
+          <span class="material-symbols-outlined">do_not_disturb_on</span>
+        </button>
+      </div>
+      <div class="comment-content-wapper">
+        <div class="comment-content" th:text="${commentRes.getContent()}"></div>
+      </div>
+      <div class="comment-createdAt" th:text="${#temporals.format(commentRes.getCreatedAt(), 'yyyy-MM-dd a hh:mm')}"></div>
+      <div class="menu-line"></div>
+    </div>
+    <div class="create-comment-wrapper">
+      <form class="create-comment" th:action="@{/comments/create/{postId}(postId=${getPostRes.getPostId()})}" method="post" th:object="${createCommentRequest}">
+        <label th:for="content"></label>
+        <textarea
+                th:field="*{content}"
+                rows="4"
+                cols="50"
+                class="comment-content"
+        ></textarea>
+        <button type="submit" class="comment-submit">등록</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-modify-comment">
+  <div class="modal-body-modify">
+    <div class="modify">
+      <form id="modifyForm-comment" method="post" th:object="${updateCommentRequest}">
+        <label th:for="newName">댓글 내용을 수정해주세요.</label><br>
+        <textarea th:field="*{content}" rows="4" cols="50"></textarea><br>
+        <button type="submit">수정</button>
+        <button type="button" class="cancel-btn">취소</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-delete-comment">
+  <div class="modal-body-delete">
+    <div class="delete">
+      <form id="deleteForm-comment" method="get">
+        <div>댓글을 삭제하시겠습니까?</div>
+        <button type="submit">삭제</button>
+        <button type="button" class="cancel-btn">취소</button>
+      </form>
+    </div>
+  </div>
+</div>
 <header>
   <div class="nav-wapper">
     <button class="nav" onclick="redirectToHome()">
@@ -50,6 +113,9 @@
       <a class="word">my page</a>
     </button>
   </div>
+  <button class="comment-button">
+    <span class="material-symbols-outlined" th:onclick=""> comment </span>
+  </button>
 </header>
 <div class="container">
   <div class="create-time-post" th:text="${#temporals.format(getPostRes.getPostCreatedAt(), 'yyyy-MM-dd a hh:mm')}"></div>

@@ -16,11 +16,13 @@ header .nav-wapper {
     margin-left: 440px;
 }
 
-header .menu-button {
+header .comment-button {
     border: none;
     background-color: white;
     margin-top: 15px;
     margin-right: 10%;
+
+    cursor: pointer;
 }
 
 header .nav-wapper .nav {
@@ -273,6 +275,168 @@ header .nav .word {
 }
 
 .modal-body-delete {
+    position: absolute;
+    top: 50%; /*모달을 화면가운데 놓기위함.*/
+    width: 400px; /*모달의 가로크기*/
+    height: 600px; /*모달의 세로크기*/
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}
+
+/*댓글 창*/
+.modal {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-body {
+    position: absolute;
+    top: 487px; /*모달을 화면가운데 놓기위함.*/
+    right: 0;
+
+    width: 500px; /*모달의 가로크기*/
+    height: 100%; /*모달의 세로크기*/
+
+    text-align: right;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px 0 0 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body .close-wrapper {
+    margin-top: 30px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.one-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body .close-wrapper .material-symbols-outlined {
+    cursor: pointer;
+}
+
+.one-comment .modify-delete-wrapper {
+    margin-right: 25px;
+}
+
+.one-comment .modify-delete-wrapper .user-profile {
+    border: none;
+    background-color: transparent;
+    position: relative;
+    left: -320px;
+}
+
+.modify-delete-wrapper .modifyComment,
+.modify-delete-wrapper .deleteComment {
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+
+    width: 30px;
+    height: 30px;
+
+    margin-right: 5px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+    cursor: pointer;
+}
+
+.modal-body .comment-content-wapper {
+    margin-top: 10px;
+    display: flex;
+    margin-left: 70px;
+}
+
+.modal-body .comment-content {
+    font-size: 17px;
+}
+
+.modal-body .comment-createdAt {
+    margin-top: 10px;
+    margin-right: 25px;
+    font-size: 12px;
+}
+
+.modal-body .menu-line {
+    width: 450px;
+    height: 1px;
+    margin: 10px 25px;
+    background-color: black;
+}
+
+/* 댓글 수정 모달창 */
+.modal-modify-comment {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-modify-comment .modal-body-modify {
+    position: absolute;
+    top: 50%; /*모달을 화면가운데 놓기위함.*/
+    width: 400px; /*모달의 가로크기*/
+    height: 600px; /*모달의 세로크기*/
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255); /*모달창 배경색 흰색*/
+    border-radius: 10px; /*테두리*/
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); /*테두리 그림자*/
+
+    transform: translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+}
+
+/* 댓글 삭제 모달창 */
+.modal-delete-comment {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 107%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-delete-comment .modal-body-delete {
     position: absolute;
     top: 50%; /*모달을 화면가운데 놓기위함.*/
     width: 400px; /*모달의 가로크기*/

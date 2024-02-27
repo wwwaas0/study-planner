@@ -12,4 +12,5 @@ public class GetPostListRes {
     private LocalDateTime createdAt;
     private String studyTime;
     private List<Task> topThreeTask;
+    private Long totalPage;
 }

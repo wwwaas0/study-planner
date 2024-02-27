@@ -65,21 +65,27 @@
             </div>
         </div>
     </div>
-    <form class="page-wapper" th:action="@{/posts/search}">
-        <button class="left-wrapper">
-            <!--            현재 페이지 기준 한칸 이전-->
-            <span class="material-symbols-outlined"> navigate_before </span>
-        </button>
-        <!--        페이지 수에 맞게 늘어나게-->
-        <button class="page-number-wrapper" type="submit" th:name="page" th:value=1>
-            <span class="page-number">1</span>
-        </button>
-        <!--            현재 페이지 기준 한칸 이후-->
-        <button class="right-wrapper">
-            <span class="material-symbols-outlined"> navigate_next </span>
-        </button>
+    <div class="page-wapper" th:with="
+            pageNumber = ${postListRes.pageable.pageNumber},
+            pageSize = ${postListRes.pageable.pageSize},
+            totalPages = ${postListRes.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
 
-    </form>
+        <a class="page-before" th:class="${postListRes.first}? 'disabled-link' : ''"
+           th:href="'?page=' + ${pageNumber - 1}">
+            <span class="material-symbols-outlined"> navigate_before </span>
+        </a>
+        <a class="page-number" th:text="${postListRes.isEmpty() ? null : page}" th:href="'?page=' + ${pageNumber}"
+           th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <span class="page-number"></span>
+        </a>
+        <a class="page-after" th:class="${postListRes.last}? 'disabled-link' : ''"
+           th:href="'?page=' + ${pageNumber + 1}">
+            <span class="material-symbols-outlined"> navigate_next </span>
+        </a>
+    </div>
 </div>
 </body>
 </html>

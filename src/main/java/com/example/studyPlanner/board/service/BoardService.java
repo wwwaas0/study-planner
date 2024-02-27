@@ -34,21 +34,21 @@ public class BoardService {
         return boardListRes;
     }
 
-    public void createBoard(String name) {
+    public Board createBoard(String name) {
         Board board = Board.builder()
                 .name(name)
                 .build();
 
-        boardRepository.save(board);
+        return boardRepository.save(board);
     }
 
     @Transactional
-    public void updateBoard(Long boardId, String newName) {
+    public Board updateBoard(Long boardId, String newName) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException(boardId + "번 게시판이 존재하지 않습니다."));
         board.setName(newName);
 
-        boardRepository.save(board);
+        return boardRepository.save(board);
     }
 
 

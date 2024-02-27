@@ -40,12 +40,12 @@ public class CommentService {
         return comment.getPost();
     }
 
-    public void createComment(Long postId, Long userId, String content) {
+    public Comment createComment(Long postId, Long userId, String content) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(postId + "번 게시글이 존재하지 않습니다."));
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(userId + "번 유저가 존재하지 않습니다."));
 
         Comment comment = new Comment(content, user, post);
-        commentRepository.save(comment);
+        return commentRepository.save(comment);
     }
 
     @Transactional

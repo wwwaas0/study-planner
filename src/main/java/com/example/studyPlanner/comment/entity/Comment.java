@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -36,5 +38,20 @@ public class Comment extends BaseEntity{
         this.content = content;
         this.user = user;
         this.post = post;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(user, comment.user) &&
+                Objects.equals(post, comment.post);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, user, post);
     }
 }

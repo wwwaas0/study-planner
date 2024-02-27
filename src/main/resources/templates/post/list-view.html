@@ -42,7 +42,7 @@
 
     <div class="board-list-wapper">
         <button class="board-all" th:onclick="|location.href='@{/posts/all}'|">전체</button>
-        <button class="board" th:each="board : ${boards}" th:text="${board.getName()}"></button>
+        <button class="board" th:each="board : ${boards}" th:text="${board.getName()}" th:onclick="|location.href='@{/posts/board/}| + ${board.getId} + |'|"></button>
     </div>
     <div class="post-list-wapper">
         <div class="line"></div>
@@ -73,10 +73,26 @@
             </div>
         </div>
     </div>
-    <div class="page-wapper">
-        <span class="material-symbols-outlined"> navigate_before </span>
-        <span class="page-number">1</span>
-        <span class="material-symbols-outlined"> navigate_next </span>
+    <div class="page-wapper" th:with="
+            pageNumber = ${postListRes.pageable.pageNumber},
+            pageSize = ${postListRes.pageable.pageSize},
+            totalPages = ${postListRes.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+        <a class="page-before" th:class="${postListRes.first}? 'disabled-link' : ''"
+           th:href="'?page=' + ${pageNumber - 1}">
+            <span class="material-symbols-outlined"> navigate_before </span>
+        </a>
+        <a class="page-number" th:text="${postListRes.isEmpty() ? null : page}" th:href="'?page=' + ${pageNumber}"
+           th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <span class="page-number"></span>
+        </a>
+        <a class="page-after" th:class="${postListRes.last}? 'disabled-link' : ''"
+           th:href="'?page=' + ${pageNumber + 1}">
+            <span class="material-symbols-outlined"> navigate_next </span>
+        </a>
     </div>
 </div>
 </body>

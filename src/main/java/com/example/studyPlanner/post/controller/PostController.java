@@ -15,6 +15,10 @@ import com.example.studyPlanner.post.entity.Post;
 import com.example.studyPlanner.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,19 +35,20 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping("/all")
-    public String getAllPosts(@RequestParam(defaultValue = "0", name = "page") int page, Model model) {
+    public String getAllPosts(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         List<Board> boards = boardService.getBoards();
-        List<GetPostListRes> getPostListRes = postService.getAllPosts(page);
+        Page<GetPostListRes> getPostListRes = postService.getAllPosts(pageable);
 
         model.addAttribute("boards", boards);
         model.addAttribute("postListRes", getPostListRes);
 
-        return "post/list-view";
+        return "/post/list-view";
     }
 
     @GetMapping("/board/{boardId}")
-    public String getPosts(@PathVariable("boardId") Long id, @RequestParam(defaultValue = "0", name = "page") int page, Model model) {
-        List<GetPostListRes> getPostListRes = postService.getPosts(id, page);
+    public String getPosts(@PathVariable("boardId") Long id,
+                           @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        Page<GetPostListRes> getPostListRes = postService.getPosts(id, pageable);
         List<Board> boards = boardService.getBoards();
 
         model.addAttribute("boards", boards);
@@ -76,10 +81,10 @@ public class PostController {
         return "/post/detail-view";
     }
 
-    //TODO: 검색하는 페이지 만들기(메인 게시판 페이지에서 돋보기 아이콘 누르면 넘어갈 수 있게)
     @GetMapping("/search")
-    public String searchPosts(@RequestParam(defaultValue = "0", name = "page") int page, @RequestParam("searchWord") String searchWord, Model model) {
-        List<GetPostListRes> getPostListRes = postService.searchPosts(searchWord, page);
+    public String searchPosts(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                              @RequestParam("searchWord") String searchWord, Model model) {
+        Page<GetPostListRes> getPostListRes = postService.searchPosts(searchWord, pageable);
         model.addAttribute("postListRes", getPostListRes);
 
         return "post/search";

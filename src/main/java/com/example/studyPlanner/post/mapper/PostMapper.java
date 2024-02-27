@@ -21,6 +21,7 @@ public interface PostMapper {
     @Mapping(source = "planner", target = "topThreeTask", qualifiedByName = "mapTopThreeTasks")
     @Mapping(source = "planner", target = "studyTime", qualifiedByName = "mapStudyTime")
     @Mapping(source = "id", target = "postId")
+    @Mapping(source = "planner.createdAt", target = "createdAt")
     public GetPostListRes toListDTO(Post post);
 
     @Mapping(source = "user.name", target = "name")

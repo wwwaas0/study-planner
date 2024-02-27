@@ -257,9 +257,25 @@ display: flex;
 }
 
 .page-wapper {
-    margin-top: 10px;
+    margin: 30px 0;
     display: flex;
     justify-content: center;
+}
+
+.page-wapper .page-before,
+.page-wapper .page-number,
+.page-wapper .page-after{
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration-line: none;
+}
+
+.disabled-link {
+    color: #a4a4ad;
+    font-weight: normal;
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    cursor: default; /* 커서 모양 변경 */
 }
 
 

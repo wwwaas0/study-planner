@@ -16,7 +16,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -37,32 +39,18 @@ public class PostService {
     private final PlannerRepository plannerRepository;
     private final CommentRepository commentRepository;
 
-    private static final int PAGE_SIZE = 10;
-
-    public List<GetPostListRes> getAllPosts(int page) {
-        PageRequest pageRequest = createPageRequest(page);
-
-        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(pageRequest);
-        List<GetPostListRes> postListResList = posts.stream()
-                .map(post -> PostMapper.INSTANCE.toListDTO(post))
-                .collect(Collectors.toList());
+    public Page<GetPostListRes> getAllPosts(Pageable pageable) {
+        Page<Post> posts = postRepository.findAll(pageable);
+        Page<GetPostListRes> postListResList = posts.map(post -> PostMapper.INSTANCE.toListDTO(post));
 
         return postListResList;
     }
 
-    public List<GetPostListRes> getPosts(Long boardId, int page) {
-        PageRequest pageRequest = createPageRequest(page);
-
-        List<Post> posts = postRepository.findByBoardIdOrderByCreatedAtDesc(boardId, pageRequest);
-        List<GetPostListRes> postListResList = posts.stream()
-                .map(post -> PostMapper.INSTANCE.toListDTO(post))
-                .collect(Collectors.toList());
+    public Page<GetPostListRes> getPosts(Long boardId, Pageable pageable) {
+        Page<Post> posts = postRepository.findByBoardId(boardId, pageable);
+        Page<GetPostListRes> postListResList = posts.map(post -> PostMapper.INSTANCE.toListDTO(post));
 
         return postListResList;
-    }
-
-    private PageRequest createPageRequest(int page) {
-        return PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
     }
 
     public GetPostRes getPost(Long postId) {
@@ -73,14 +61,10 @@ public class PostService {
         return getPostRes;
     }
 
-    public List<GetPostListRes> searchPosts(String search, int page) { // 할일 내용 또는 게시글의 내용
+    public Page<GetPostListRes> searchPosts(String search, Pageable pageable) {
         //TODO: 할 일의 content도 검색 가능하게
-        PageRequest pageRequest = createPageRequest(page);
-        List<Post> posts = postRepository.findByContentContaining(search, pageRequest);
-
-        List<GetPostListRes> postListResList = posts.stream()
-                .map(post -> PostMapper.INSTANCE.toListDTO(post))
-                .collect(Collectors.toList());
+        Page<Post> posts = postRepository.findByContentContaining(search, pageable);
+        Page<GetPostListRes> postListResList = posts.map(post -> PostMapper.INSTANCE.toListDTO(post));
         return postListResList;
     }
 

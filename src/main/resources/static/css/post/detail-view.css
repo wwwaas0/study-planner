@@ -352,6 +352,36 @@ header .nav .word {
     left: -320px;
 }
 
+.create-comment-wrapper {
+    position: absolute;
+    top: 870px;
+
+    background-color: #f4f4f4ed;
+}
+
+.create-comment-wrapper .create-comment {
+    display: flex;
+}
+
+.create-comment-wrapper .create-comment .comment-content {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.create-comment-wrapper .create-comment .comment-content:focus {
+    border: none;
+    outline: none;
+}
+
+.create-comment-wrapper .create-comment .comment-submit {
+    border: none;
+    background-color: transparent;
+    width: 100px;
+    cursor: pointer;
+}
+
 .modify-delete-wrapper .modifyComment,
 .modify-delete-wrapper .deleteComment {
     background-color: white;
